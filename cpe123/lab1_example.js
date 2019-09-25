@@ -5,10 +5,65 @@ function setup() {
 }
 
 let degrees = 0;
+let blue1rate = .025;
+let blue2rate = .075;
+let blue = 0;
+let blue2 = 0;
+let color = 'up';
 function draw() {
 	let dolphinColor =('#5BA5FF');
 
 	background(3, 206, 252);
+
+//Background Layer 1
+	for(let x = 0; x < 400; x = x+100){  //to make this work I followed the house example here https://genekogan.com/code/p5js-transformations/
+		for(let y = 0; y < 400; y = y+50){
+			push();
+
+
+			if (color === 'up'){ //Didn't know exact syntax for if in js, used this as reference https://www.w3schools.com/js/js_if_else.asp
+					blue = blue+blue1rate;
+				} else if (color === 'down'){
+					blue = blue-blue1rate;
+				}
+			if(round(blue) === 0){
+				color = 'up'
+			} else if(round(blue) === 255){
+				console.log("hit");
+				color = 'down'
+			}
+				console.log(blue); //My blue thing was being screwy so i needed to see what blue was, i referenced this to output to console. https://www.w3schools.com/js/js_output.asp
+				console.log(color);
+				fill(50,50,blue);
+				translate(x,y);
+				triangle(0,50,50,10,100,50);
+
+			pop();
+		}
+	}
+//Background Layer 2
+	for(let w = -50; w < 400; w = w+100){  //to make this work I followed the house example here https://genekogan.com/code/p5js-transformations/
+		for(let z = -75; z < 400; z = z+100){
+			push();
+			if (color === 'up'){ //Didn't know exact syntax for if in js, used this as reference https://www.w3schools.com/js/js_if_else.asp
+				blue2 = blue2+blue2rate;
+			} else if (color === 'down'){
+				blue2 = blue2-blue2rate;
+			}
+			if(round(blue2) === 0){  //An issue I was having was that blue never actually hit exactly 255, it was always some decimal, so, I just rounded to fix that.
+				color = 'up'
+			} else if(round(blue2) === 255){
+				console.log("hit");
+				color = 'down'
+			}
+			fill(55,40,blue2);
+			translate(w,z);
+			triangle(0,50,50,10,100,50);
+			pop();
+		}
+	}
+//The Sun!
+
 
 
 //The Actual Dolphin
@@ -76,9 +131,13 @@ function draw() {
 		push();
 			fill(0,0,0);
 			ellipse(80, -15, 7, 7);
+
+		//Mouth
+			push();
+				stroke(5);
+				line(80,15, 100, 15);
+			pop();
 		pop();
-
-
 
 	pop();
 
@@ -88,3 +147,5 @@ function draw() {
 
 
 }
+
+
